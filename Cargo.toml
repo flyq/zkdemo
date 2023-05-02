@@ -1,2 +1,10 @@
 [workspace]
-members = ["src/halo2", "src/nova", "src/supernova"]
+members = [
+    "src/halo2_simple",
+    "src/halo2_layout",
+    "src/halo2_cost",
+    "src/halo2_chips",
+    "src/nova_minroot",
+    "src/nova_sign",
+    "src/supernova",
+]
