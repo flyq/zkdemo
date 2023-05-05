@@ -1194,6 +1194,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "halo2_struct"
+version = "0.1.0"
+dependencies = [
+ "ff 0.13.0",
+ "halo2_proofs",
+ "rand_core",
+]
+
+[[package]]
 name = "hashbrown"
 version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
