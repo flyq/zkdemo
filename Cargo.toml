@@ -8,4 +8,7 @@ members = [
     "src/nova_minroot",
     "src/nova_sign",
     "src/supernova",
+    "src/ark_ff_demo",
+    "src/ark_ser_demo",
+    "src/ark_ec_demo",
 ]
