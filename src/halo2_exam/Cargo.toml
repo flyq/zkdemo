@@ -1,0 +1,10 @@
+[package]
+name = "halo2_exam"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+group = "0.13"
+halo2_proofs = { path = "/Users/flyq/workspace/github/halo2/halo2_proofs" }

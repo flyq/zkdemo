@@ -4,6 +4,7 @@ members = [
     "src/halo2_layout",
     "src/halo2_cost",
     "src/halo2_chips",
+    "src/halo2_exam",
     "src/halo2_struct",
     "src/nova_minroot",
     "src/nova_sign",

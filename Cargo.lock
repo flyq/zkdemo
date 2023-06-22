@@ -1174,7 +1174,7 @@ name = "halo2_chips"
 version = "0.1.0"
 dependencies = [
  "group 0.13.0",
- "halo2_proofs",
+ "halo2_proofs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand_core",
 ]
 
@@ -1184,8 +1184,16 @@ version = "0.1.0"
 dependencies = [
  "group 0.13.0",
  "gumdrop",
- "halo2_proofs",
+ "halo2_proofs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand_core",
+]
+
+[[package]]
+name = "halo2_exam"
+version = "0.1.0"
+dependencies = [
+ "group 0.13.0",
+ "halo2_proofs 0.3.0",
 ]
 
 [[package]]
@@ -1193,9 +1201,22 @@ name = "halo2_layout"
 version = "0.1.0"
 dependencies = [
  "ff 0.13.0",
- "halo2_proofs",
+ "halo2_proofs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "plotters",
  "rand_core",
+]
+
+[[package]]
+name = "halo2_proofs"
+version = "0.3.0"
+dependencies = [
+ "blake2b_simd",
+ "ff 0.13.0",
+ "group 0.13.0",
+ "maybe-rayon",
+ "pasta_curves",
+ "rand_core",
+ "tracing",
 ]
 
 [[package]]
@@ -1220,7 +1241,7 @@ name = "halo2_simple"
 version = "0.1.0"
 dependencies = [
  "group 0.13.0",
- "halo2_proofs",
+ "halo2_proofs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1228,7 +1249,7 @@ name = "halo2_struct"
 version = "0.1.0"
 dependencies = [
  "ff 0.13.0",
- "halo2_proofs",
+ "halo2_proofs 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand_core",
 ]
 
