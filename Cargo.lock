@@ -1192,7 +1192,6 @@ dependencies = [
 name = "halo2_exam"
 version = "0.1.0"
 dependencies = [
- "group 0.13.0",
  "halo2_proofs 0.3.0",
 ]
 

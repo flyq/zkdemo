@@ -1,13 +1,11 @@
-// use std::marker::PhantomData;
-
 use std::marker::PhantomData;
 
-use group::ff::Field;
+use halo2_proofs::arithmetic::Field;
 use halo2_proofs::circuit::{AssignedCell, Chip, Layouter, Region, SimpleFloorPlanner, Value};
 use halo2_proofs::plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector};
 use halo2_proofs::poly::Rotation;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Hash)]
 struct MyConfig {
     advice: [Column<Advice>; 2],
     instance: Column<Instance>,
@@ -122,33 +120,37 @@ impl<F: Field> Circuit<F> for MyCircuit<F> {
     }
 
     fn configure(meta: &mut ConstraintSystem<F>) -> Self::Config {
-        println!("ConstraintSystem 0: {:?}", meta);
-
         // 修改了 CS 的 num_advice_columns 为2
         // 修改了 CS 的 num_advice_queries 为 [0, 0]
-        let advice = [meta.advice_column(), meta.advice_column()];
-        println!("advice: {:?}", advice);
-        println!("ConstraintSystem 1: {:?}", meta);
+        let advice = [meta.advice_column(), meta.advice_column()]; // 获取一个 Column<Advice>
 
         // 修改了 CS 的 num_instance_columns 为 1
-        let instance = meta.instance_column();
-        println!("ConstraintSystem 2: {:?}", meta);
+        let instance = meta.instance_column(); // 获取一个 Column<Instance>
 
         // 修改了 CS 的 num_fixed_columns 为 1
-        let constant = meta.fixed_column();
-        println!("ConstraintSystem 3: {:?}", meta);
+        let constant = meta.fixed_column(); // 获取一个 Column<Fixed>
 
-        println!("advice: {:?}", advice);
-        println!("instance: {:?}", instance);
-        println!("constant: {:?}", constant);
-
+        // 修改了 CS 的 instance_queries（第一次要添加，其他就直接返回位置）, permutation（置换约束）,
+        // 启用强制执行此列中的单元格相等的功能
         meta.enable_equality(instance);
+
+        // 修改了 CS 的 constants，
+        // 然后 enable_equality()，
+        // 这里将修改 fixed_queries（第一个需要修改），以及 permutation（置换约束）
         meta.enable_constant(constant);
+
+        // 修改 advice_queries（第一次需要），以及 permutation（置换约束）
+        // advice 还有个 num_advice_queries，记录某列有多少个元素，需要增加。
         for column in &advice {
             meta.enable_equality(*column);
         }
-        let s_mul = meta.selector();
 
+        // 只会修改 CS 的 num_selectors，+1
+        // 返回一个（index(0), true) 的 selector。
+        let s_mul = meta.selector();
+        println!("meta: {:?}", meta);
+
+        // 修改 CS 的 gate, advice_queries
         meta.create_gate("mul", |meta| {
             let lhs = meta.query_advice(advice[0], Rotation::cur());
             let rhs = meta.query_advice(advice[1], Rotation::cur());
@@ -157,8 +159,7 @@ impl<F: Field> Circuit<F> for MyCircuit<F> {
 
             vec![s_mul * (lhs * rhs - out)]
         });
-
-        println!("ConstraintSystem 2: {:?}", meta);
+        println!("meta: {:?}", meta);
 
         MyConfig {
             advice,
@@ -217,9 +218,9 @@ fn main() {
     let k = 4;
 
     // Prepare the private and public inputs to the circuit!
-    let constant = Fp::from(7);
-    let a = Fp::from(2);
-    let b = Fp::from(3);
+    let constant = Fp::from(13);
+    let a = Fp::from(17);
+    let b = Fp::from(23);
     let c = constant * a.square() * b.square();
 
     // Instantiate the circuit with the private inputs.
@@ -229,8 +230,6 @@ fn main() {
         b: Value::known(b),
     };
 
-    println!("my circuit: {:?}", circuit);
-
     // Arrange the public input. We expose the multiplication result in row 0
     // of the instance column, so we position it there in our public inputs.
     let public_inputs = vec![c];
@@ -238,6 +237,5 @@ fn main() {
     // Given the correct public input, our circuit will verify.
     let prover = MockProver::run(k, &circuit, vec![public_inputs.clone()]).unwrap();
 
-    println!("my prover: {:?}", prover);
     assert_eq!(prover.verify(), Ok(()));
 }
