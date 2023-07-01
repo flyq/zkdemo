@@ -26,7 +26,7 @@ This is Sudoku problem, its answer needs to fill in the blank cell with an integ
 
 The prover Alice says she knows the answer of a certain Sudoku, and Bob will verify it.
 
-1. Bob generates random numbers $x, y$, that $x \in \{1, 2, 3\}$ and $y \in \{1, \dots, 9\}$, $x$ represents type in `row`, `column` and `small table`, and send to Alice.
+1. Bob generates random numbers $x, y$, that $x \in \{ 1, 2, 3 \}$ and $y \in \{1, \dots, 9\}$, $x$ represents type in `row`, `column` and `small table`, and send to Alice.
 2. For example, this time $x = 1, y = 5$, then Alice needs to provide 9 values of row_5 to Bob
 3. Bob will check if the set of 9 values is equal to $\{1, \dots, 9\}$
 
