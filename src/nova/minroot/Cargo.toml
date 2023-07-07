@@ -1,0 +1,15 @@
+[package]
+name = "minroot"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nova-snark = { workspace = true }
+bellperson = { workspace = true }
+bincode = { workspace = true }
+ff = { workspace = true }
+num-bigint = { workspace = true }
+flate2 = { workspace = true }
+pasta_curves = { workspace = true }
