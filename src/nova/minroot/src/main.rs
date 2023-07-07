@@ -1,4 +1,9 @@
-use bellperson::{gadgets::num::AllocatedNum, ConstraintSystem, SynthesisError};
+//! Demonstrates how to use Nova to produce a recursive proof of the correct execution of
+//! iterations of the MinRoot function, thereby realizing a Nova-based verifiable delay function (VDF).
+//! We execute a configurable number of iterations of the MinRoot function per step of Nova's recursion.
+type G1 = pasta_curves::pallas::Point;
+type G2 = pasta_curves::vesta::Point;
+use ::bellperson::{gadgets::num::AllocatedNum, ConstraintSystem, SynthesisError};
 use ff::PrimeField;
 use flate2::{write::ZlibEncoder, Compression};
 use nova_snark::{
@@ -10,9 +15,6 @@ use nova_snark::{
 };
 use num_bigint::BigUint;
 use std::time::Instant;
-
-type G1 = pasta_curves::pallas::Point;
-type G2 = pasta_curves::vesta::Point;
 
 #[derive(Clone, Debug)]
 struct MinRootIteration<F: PrimeField> {
@@ -139,6 +141,7 @@ where
         ]
     }
 }
+
 fn main() {
     println!("Nova-based VDF with MinRoot delay function");
     println!("=========================================================");
@@ -170,7 +173,7 @@ fn main() {
             G2,
             MinRootCircuit<<G1 as Group>::Scalar>,
             TrivialTestCircuit<<G2 as Group>::Scalar>,
-        >::setup(circuit_primary, circuit_secondary.clone());
+        >::setup(circuit_primary.clone(), circuit_secondary.clone());
         println!("PublicParams::setup, took {:?} ", start.elapsed());
 
         println!(
@@ -216,15 +219,21 @@ fn main() {
         type C2 = TrivialTestCircuit<<G2 as Group>::Scalar>;
         // produce a recursive SNARK
         println!("Generating a RecursiveSNARK...");
-        let mut recursive_snark: Option<RecursiveSNARK<G1, G2, C1, C2>> = None;
+        let mut recursive_snark: RecursiveSNARK<G1, G2, C1, C2> =
+            RecursiveSNARK::<G1, G2, C1, C2>::new(
+                &pp,
+                &minroot_circuits[0],
+                &circuit_secondary,
+                z0_primary.clone(),
+                z0_secondary.clone(),
+            );
 
         for (i, circuit_primary) in minroot_circuits.iter().take(num_steps).enumerate() {
             let start = Instant::now();
-            let res = RecursiveSNARK::prove_step(
+            let res = recursive_snark.prove_step(
                 &pp,
-                recursive_snark,
-                circuit_primary.clone(),
-                circuit_secondary.clone(),
+                circuit_primary,
+                &circuit_secondary,
                 z0_primary.clone(),
                 z0_secondary.clone(),
             );
@@ -235,16 +244,12 @@ fn main() {
                 res.is_ok(),
                 start.elapsed()
             );
-            recursive_snark = Some(res.unwrap());
         }
-
-        assert!(recursive_snark.is_some());
-        let recursive_snark = recursive_snark.unwrap();
 
         // verify the recursive SNARK
         println!("Verifying a RecursiveSNARK...");
         let start = Instant::now();
-        let res = recursive_snark.verify(&pp, num_steps, z0_primary.clone(), z0_secondary.clone());
+        let res = recursive_snark.verify(&pp, num_steps, &z0_primary, &z0_secondary);
         println!(
             "RecursiveSNARK::verify: {:?}, took {:?}",
             res.is_ok(),
@@ -259,10 +264,8 @@ fn main() {
         let start = Instant::now();
         type EE1 = nova_snark::provider::ipa_pc::EvaluationEngine<G1>;
         type EE2 = nova_snark::provider::ipa_pc::EvaluationEngine<G2>;
-        type CC1 = nova_snark::spartan::spark::TrivialCompComputationEngine<G1, EE1>;
-        type CC2 = nova_snark::spartan::spark::TrivialCompComputationEngine<G2, EE2>;
-        type S1 = nova_snark::spartan::RelaxedR1CSSNARK<G1, EE1, CC1>;
-        type S2 = nova_snark::spartan::RelaxedR1CSSNARK<G2, EE2, CC2>;
+        type S1 = nova_snark::spartan::snark::RelaxedR1CSSNARK<G1, EE1>;
+        type S2 = nova_snark::spartan::snark::RelaxedR1CSSNARK<G2, EE2>;
 
         let res = CompressedSNARK::<_, _, _, _, S1, S2>::prove(&pp, &pk, &recursive_snark);
         println!(

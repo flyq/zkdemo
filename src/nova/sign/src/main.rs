@@ -2,6 +2,7 @@ use bellperson::{
     gadgets::{boolean::AllocatedBit, test::TestConstraintSystem},
     ConstraintSystem, SynthesisError,
 };
+use core::ops::{AddAssign, MulAssign};
 use ff::{
     derive::byteorder::{ByteOrder, LittleEndian},
     Field, PrimeField, PrimeFieldBits,
@@ -14,7 +15,6 @@ use pasta_curves::{
 };
 use rand::{rngs::OsRng, RngCore};
 use sha3::{Digest, Sha3_512};
-use std::ops::{AddAssign, MulAssign};
 
 #[derive(Debug, Clone, Copy)]
 pub struct SecretKey<G: Group>(G::Scalar);
@@ -57,7 +57,7 @@ where
         let mut t = [0u8; 80];
         rng.fill_bytes(&mut t[..]);
 
-        // h = H*(T || M)
+        // h = H(T || M)
         let h = Self::hash_to_scalar(b"Nova_Ecdsa_Hash", &t[..], c.to_repr().as_mut());
 
         // R = [h]G
@@ -73,7 +73,7 @@ where
     }
 
     fn mul_bits<B: AsRef<[u64]>>(s: &G::Scalar, bits: BitIterator<B>) -> G::Scalar {
-        let mut x = G::Scalar::zero();
+        let mut x = G::Scalar::ZERO;
         for bit in bits {
             x = x.double();
 
@@ -88,14 +88,14 @@ where
         assert_eq!(digest.len(), 64);
         let mut bits: [u64; 8] = [0; 8];
         LittleEndian::read_u64_into(digest, &mut bits);
-        Self::mul_bits(&G::Scalar::one(), BitIterator::new(bits))
+        Self::mul_bits(&G::Scalar::ONE, BitIterator::new(bits))
     }
 
     pub fn to_uniform_32(digest: &[u8]) -> G::Scalar {
         assert_eq!(digest.len(), 32);
         let mut bits: [u64; 4] = [0; 4];
         LittleEndian::read_u64_into(digest, &mut bits);
-        Self::mul_bits(&G::Scalar::one(), BitIterator::new(bits))
+        Self::mul_bits(&G::Scalar::ONE, BitIterator::new(bits))
     }
 
     pub fn hash_to_scalar(persona: &[u8], a: &[u8], b: &[u8]) -> G::Scalar {
@@ -232,8 +232,8 @@ pub fn verify_signature<G: NovaGroup, CS: ConstraintSystem<G::Base>>(
         |lc| lc + (G::Base::from_str_vartime("2").unwrap(), CS::one()),
     );
 
-    let sg = g.scalar_mul(cs.namespace(|| "[s]G"), s_bits)?;
-    let cpk = pk.scalar_mul(&mut cs.namespace(|| "[c]PK"), c_bits)?;
+    let sg = g.scalar_mul(cs.namespace(|| "[s]G"), &s_bits)?;
+    let cpk = pk.scalar_mul(&mut cs.namespace(|| "[c]PK"), &c_bits)?;
     let rcpk = cpk.add(&mut cs.namespace(|| "R + [c]PK"), &r)?;
 
     let (rcpk_x, rcpk_y, _) = rcpk.get_coordinates();

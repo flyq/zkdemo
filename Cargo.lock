@@ -1504,13 +1504,13 @@ dependencies = [
 name = "minroot"
 version = "0.1.0"
 dependencies = [
- "bellperson 0.24.1",
+ "bellperson 0.25.0",
  "bincode",
- "ff 0.12.1",
- "fil_pasta_curves",
+ "ff 0.13.0",
  "flate2",
  "nova-snark 0.22.0",
  "num-bigint 0.4.3",
+ "pasta_curves",
 ]
 
 [[package]]
@@ -2146,12 +2146,12 @@ dependencies = [
 name = "sign"
 version = "0.1.0"
 dependencies = [
- "bellperson 0.24.1",
- "ff 0.12.1",
- "fil_pasta_curves",
+ "bellperson 0.25.0",
+ "ff 0.13.0",
  "flate2",
  "nova-snark 0.22.0",
  "num-bigint 0.4.3",
+ "pasta_curves",
  "rand",
  "sha3 0.10.8",
 ]
