@@ -13,7 +13,6 @@ members = [
     "src/supernova/example",
     "src/nova/sign",
     "src/nova/minroot",
-    "src/nova_minroot",
 ]
 resolver = "2"
 
