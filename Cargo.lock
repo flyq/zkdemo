@@ -932,6 +932,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "fib2"
+version = "0.1.0"
+dependencies = [
+ "halo2_proofs",
+ "plotters",
+]
+
+[[package]]
+name = "fib3"
+version = "0.1.0"
+dependencies = [
+ "halo2_proofs",
+ "plotters",
+]
+
+[[package]]
 name = "flate2"
 version = "1.0.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1214,6 +1230,13 @@ dependencies = [
  "num-rational",
  "num-traits",
  "png",
+]
+
+[[package]]
+name = "is_zero"
+version = "0.1.0"
+dependencies = [
+ "halo2_proofs",
 ]
 
 [[package]]
@@ -1713,6 +1736,33 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d25bf25ec5ae4a3f1b92f929810509a2f53d7dca2f50b794ff57e3face536c8f"
 dependencies = [
  "rand_core",
+]
+
+[[package]]
+name = "range_check1"
+version = "0.1.0"
+dependencies = [
+ "ff 0.13.0",
+ "halo2_proofs",
+ "plotters",
+]
+
+[[package]]
+name = "range_check2"
+version = "0.1.0"
+dependencies = [
+ "ff 0.13.0",
+ "halo2_proofs",
+ "plotters",
+]
+
+[[package]]
+name = "range_check3"
+version = "0.1.0"
+dependencies = [
+ "ff 0.13.0",
+ "halo2_proofs",
+ "plotters",
 ]
 
 [[package]]

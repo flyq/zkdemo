@@ -1,15 +1,14 @@
+use std::ops::{Add, Mul};
+use std::thread;
+
 use ark_bls12_381::Fq;
 use ark_crypto_primitives::sponge::poseidon::{find_poseidon_ark_and_mds, PoseidonConfig};
 use ark_ff::{fields::PrimeField, One};
-use ark_r1cs_std::{
-    alloc::AllocVar,
-    eq::EqGadget,
-    fields::{fp::FpVar, FieldVar},
-    R1CSVar,
-};
+use ark_r1cs_std::alloc::AllocVar;
+use ark_r1cs_std::eq::EqGadget;
+use ark_r1cs_std::fields::{fp::FpVar, FieldVar};
+use ark_r1cs_std::R1CSVar;
 use ark_relations::r1cs::ConstraintSystemRef;
-use std::ops::{Add, Mul};
-use std::thread;
 use supernova::{create_generators, r1cs::R1CS, Proof};
 
 fn main() {

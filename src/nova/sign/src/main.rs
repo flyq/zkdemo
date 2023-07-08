@@ -1,18 +1,13 @@
-use bellperson::{
-    gadgets::{boolean::AllocatedBit, test::TestConstraintSystem},
-    ConstraintSystem, SynthesisError,
-};
 use core::ops::{AddAssign, MulAssign};
-use ff::{
-    derive::byteorder::{ByteOrder, LittleEndian},
-    Field, PrimeField, PrimeFieldBits,
-};
+
+use bellperson::gadgets::{boolean::AllocatedBit, test::TestConstraintSystem};
+use bellperson::{ConstraintSystem, SynthesisError};
+use ff::derive::byteorder::{ByteOrder, LittleEndian};
+use ff::{Field, PrimeField, PrimeFieldBits};
 use nova_snark::{gadgets::ecc::AllocatedPoint, traits::Group as NovaGroup};
 use num_bigint::BigUint;
-use pasta_curves::{
-    arithmetic::CurveAffine,
-    group::{Curve, Group},
-};
+use pasta_curves::arithmetic::CurveAffine;
+use pasta_curves::group::{Curve, Group};
 use rand::{rngs::OsRng, RngCore};
 use sha3::{Digest, Sha3_512};
 

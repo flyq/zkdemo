@@ -3,12 +3,18 @@ members = [
     "src/arkworks/ec",
     "src/arkworks/ff",
     "src/arkworks/ser",
-    "src/halo2/simple",
-    "src/halo2/simple1",
-    "src/halo2/fib1",
-    "src/halo2/layout",
     "src/halo2/chips",
     "src/halo2/cost",
+    "src/halo2/fib1",
+    "src/halo2/fib2",
+    "src/halo2/fib3",
+    "src/halo2/is_zero",
+    "src/halo2/layout",
+    "src/halo2/range_check1",
+    "src/halo2/range_check2",
+    "src/halo2/range_check3",
+    "src/halo2/simple",
+    "src/halo2/simple1",
     "src/halo2/structs",
     "src/supernova/example",
     "src/nova/sign",
@@ -38,6 +44,7 @@ halo2_proofs = { git = "https://github.com/zcash/halo2", package = "halo2_proofs
 nova-snark = { git = "https://github.com/microsoft/Nova", rev = "dd3b1a217d49f662571e124f6a07fc6441aa0264" }
 num-bigint = { version = "0.4.3", features = ["serde", "rand"] }
 pasta_curves = { version = "0.5", features = ["repr-c", "serde"] }
+plotters = { version = "0.3" }
 rand = { version = "0.8" }
 rand_core = { version = "0.6" }
 sha3 = { version = "0.10" }

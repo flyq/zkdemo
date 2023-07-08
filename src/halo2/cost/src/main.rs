@@ -1,13 +1,12 @@
-use std::{
-    cmp, fmt, iter,
-    num::ParseIntError,
-    str::FromStr,
-    time::{Duration, Instant},
-};
+use std::num::ParseIntError;
+use std::str::FromStr;
+use std::time::{Duration, Instant};
+use std::{cmp, fmt, iter};
 
 use group::{ff::Field, Curve, Group};
 use gumdrop::Options;
-use halo2_proofs::{arithmetic::best_multiexp, pasta::pallas};
+use halo2_proofs::arithmetic::best_multiexp;
+use halo2_proofs::pasta::pallas;
 
 struct Estimator {
     /// Scalars for estimating multiexp performance.

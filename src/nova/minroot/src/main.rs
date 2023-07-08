@@ -1,20 +1,19 @@
 //! Demonstrates how to use Nova to produce a recursive proof of the correct execution of
 //! iterations of the MinRoot function, thereby realizing a Nova-based verifiable delay function (VDF).
 //! We execute a configurable number of iterations of the MinRoot function per step of Nova's recursion.
-type G1 = pasta_curves::pallas::Point;
-type G2 = pasta_curves::vesta::Point;
-use ::bellperson::{gadgets::num::AllocatedNum, ConstraintSystem, SynthesisError};
+use std::time::Instant;
+
+use bellperson::gadgets::num::AllocatedNum;
+use bellperson::{ConstraintSystem, SynthesisError};
 use ff::PrimeField;
 use flate2::{write::ZlibEncoder, Compression};
-use nova_snark::{
-    traits::{
-        circuit::{StepCircuit, TrivialTestCircuit},
-        Group,
-    },
-    CompressedSNARK, PublicParams, RecursiveSNARK,
-};
+use nova_snark::traits::circuit::{StepCircuit, TrivialTestCircuit};
+use nova_snark::traits::Group;
+use nova_snark::{CompressedSNARK, PublicParams, RecursiveSNARK};
 use num_bigint::BigUint;
-use std::time::Instant;
+
+type G1 = pasta_curves::pallas::Point;
+type G2 = pasta_curves::vesta::Point;
 
 #[derive(Clone, Debug)]
 struct MinRootIteration<F: PrimeField> {

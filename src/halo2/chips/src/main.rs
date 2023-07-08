@@ -1,12 +1,11 @@
 use std::marker::PhantomData;
 
-use halo2_proofs::{
-    arithmetic::Field,
-    circuit::{AssignedCell, Chip, Layouter, Region, SimpleFloorPlanner, Value},
-    plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector},
-    poly::Rotation,
-};
-use halo2_proofs::{dev::MockProver, pasta::Fp};
+use halo2_proofs::arithmetic::Field;
+use halo2_proofs::circuit::{AssignedCell, Chip, Layouter, Region, SimpleFloorPlanner, Value};
+use halo2_proofs::dev::MockProver;
+use halo2_proofs::pasta::Fp;
+use halo2_proofs::plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Instance, Selector};
+use halo2_proofs::poly::Rotation;
 use rand_core::OsRng;
 
 // ANCHOR: field-instructions

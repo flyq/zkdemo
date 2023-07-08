@@ -1276,3 +1276,5 @@ pub struct RegionShape {
 - [理解 Plonk 协议](https://github.com/sec-bit/learning-zkp/blob/develop/plonk-intro-cn/README.md)
 - [Zcash Protocol Specification](https://zips.z.cash/protocol/canopy.pdf#circuitdesign)
 - [PAZK](https://people.cs.georgetown.edu/jthaler/ProofsArgsAndZK.html)
+- [Halo2 Fibonacci Example Part 1](https://github.com/enricobottazzi/halo2-fibonacci-ex)
+- [Halo2-more-examples-part-2](https://github.com/enricobottazzi/halo2-intro)

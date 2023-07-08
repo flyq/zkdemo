@@ -4,7 +4,8 @@ use ark_bls12_381::{
 use ark_ec::pairing::Pairing;
 use ark_ec::{AffineRepr, CurveGroup, Group, VariableBaseMSM};
 use ark_ff::Field;
-use ark_std::{ops::Mul, UniformRand, Zero};
+use ark_std::ops::Mul;
+use ark_std::{UniformRand, Zero};
 
 fn main() {
     // ---------------- Group trait ----------------
