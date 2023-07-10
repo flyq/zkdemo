@@ -16,9 +16,9 @@ members = [
     "src/halo2/simple",
     "src/halo2/simple1",
     "src/halo2/structs",
-    "src/supernova/example",
     "src/nova/sign",
     "src/nova/minroot",
+    "src/supernova/example",
 ]
 resolver = "2"
 
