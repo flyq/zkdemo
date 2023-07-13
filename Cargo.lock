@@ -1165,6 +1165,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "hash"
+version = "0.1.0"
+dependencies = [
+ "bellperson",
+ "blstrs",
+ "ff 0.13.0",
+ "pairing",
+ "rand",
+ "sha2",
+]
+
+[[package]]
 name = "hashbrown"
 version = "0.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"

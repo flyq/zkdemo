@@ -3,6 +3,7 @@ members = [
     "src/arkworks/ec",
     "src/arkworks/ff",
     "src/arkworks/ser",
+    "src/bellperson/hash",
     "src/halo2/chips",
     "src/halo2/cost",
     "src/halo2/fib1",
@@ -32,8 +33,11 @@ ark-relations = { version = "0.4" }
 ark-r1cs-std = { version = "0.4" }
 ark-serialize = { version = "0.4", features = ["derive"] }
 ark-std = { version = "0.4" }
-bellperson = { version = "0.25", default-features = false }
+bellperson = { version = "0.25", default-features = false, features = [
+    "groth16",
+] }
 bincode = { version = "1.2" }
+blstrs = { version = "0.7" }
 ff = { version = "0.13", default-features = false, features = ["derive"] }
 flate2 = { version = "1.0", default-features = false }
 group = { version = "0.13" }
@@ -43,10 +47,12 @@ halo2_proofs = { git = "https://github.com/zcash/halo2", package = "halo2_proofs
 ] }
 nova-snark = { git = "https://github.com/microsoft/Nova", rev = "dd3b1a217d49f662571e124f6a07fc6441aa0264" }
 num-bigint = { version = "0.4.3", features = ["serde", "rand"] }
+pairing = { version = "0.23" }
 pasta_curves = { version = "0.5", features = ["repr-c", "serde"] }
 plotters = { version = "0.3" }
 rand = { version = "0.8" }
 rand_core = { version = "0.6" }
+sha2 = { version = "0.10" }
 sha3 = { version = "0.10" }
 supernova = { git = "https://github.com/jules/supernova", rev = "a707ad58347bc86d2ad4edac6494d580c3a08cdd" }
 
