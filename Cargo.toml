@@ -19,6 +19,7 @@ members = [
     "src/halo2/structs",
     "src/nova/sign",
     "src/nova/minroot",
+    "src/sindri/forge-sample",
     "src/supernova/example",
 ]
 resolver = "2"
@@ -52,9 +53,11 @@ pasta_curves = { version = "0.5", features = ["repr-c", "serde"] }
 plotters = { version = "0.3" }
 rand = { version = "0.8" }
 rand_core = { version = "0.6" }
+reqwest = { version = "0.11.20" }
 sha2 = { version = "0.10" }
 sha3 = { version = "0.10" }
 supernova = { git = "https://github.com/jules/supernova", rev = "a707ad58347bc86d2ad4edac6494d580c3a08cdd" }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 
 [profile.release]
 opt-level = "z"
