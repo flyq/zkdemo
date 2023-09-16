@@ -1,55 +1,39 @@
-use std::env;
+use std::{env, thread, time};
 
-use reqwest::{header::HeaderMap, Client, Error, Response};
+mod client;
 
 #[tokio::main]
 async fn main() {
-    let mut headers_json = HeaderMap::new();
-    headers_json.insert("Accept", "application/json".parse().unwrap());
-
-    let mut headers_multipart = HeaderMap::new();
-    headers_multipart.insert("Accept", "multipart/form-data".parse().unwrap());
-
-    let mut headers_urlencode = HeaderMap::new();
-    headers_urlencode.insert("Accept", "application/json".parse().unwrap());
-    headers_urlencode.insert(
-        "Content-Type",
-        "application/x-www-form-urlencoded".parse().unwrap(),
-    );
-
-    let create_body =
-        r#"{"circuit_name": "multiplier_example", "circuit_type": "Circom C Groth16 bn254"}"#;
-
     let api_key = get_api_key();
+
+    println!("api_key: {:?}", api_key);
+
+    let mut client = client::ForgeClient::new(
+        api_key,
+        "v1".to_string(),
+        "https://forge.sindri.app/api".to_string(),
+    );
 
     // Create new circuit
     println!("1. Creating circuit...");
-    let response = post_sindri(api_key, "/circuit/create", headers_json, create_body)
-        .await
-        .unwrap();
-    println!("{:?}", response);
-}
+    client.create_circuit_id().await;
+    print!("circuit_id: {:?}", client.circuit_id);
 
-async fn post_sindri(
-    key: String,
-    sub_path: &str,
-    headers: HeaderMap,
-    body: &str,
-) -> Result<Response, Error> {
-    let mut url = "https://forge.sindri.app/api/v1".to_string();
-    url.push_str(sub_path);
-    url.push_str(&format!("?api_key={}", key));
-
-    println!("{:?}", url);
-
-    let client = Client::new();
-    let res = client
-        .post(url)
-        .headers(headers)
-        .body(body.to_owned())
-        .send()
+    // update the file
+    client
+        .upload_files("./src/sindri/forge-sample/andN.tar.gz")
         .await;
-    res
+
+    // compile
+    client.compile().await;
+
+    // waiting
+    let duration = time::Duration::from_secs(20);
+    thread::sleep(duration);
+
+    // get detail
+    let res = client.get_circuit_detail().await;
+    println!("res: {:?}", res);
 }
 
 fn get_api_key() -> String {
