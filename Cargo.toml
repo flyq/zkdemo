@@ -19,6 +19,7 @@ members = [
     "src/halo2/structs",
     "src/nova/sign",
     "src/nova/minroot",
+    "src/pazk/p3_1",
     "src/sindri/forge-sample",
     "src/supernova/example",
 ]
