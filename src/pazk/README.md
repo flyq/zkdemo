@@ -9,7 +9,7 @@
 ## Abtract
 Interactive proofs(IPs) and arguments are cryptographic protocols that enable an untrusted prover to provide a guarantee that it performed a requested computation correctly.
 
-IPs allow for interaction between prover and verifier, as well as a tiny but nonzero probabilisty that an invalid proof passes verification. Arguments(But not IPs) even permit there to be "proofs" of false statements, so long as those "proofs" require exorbitant computational power to find.
+IPs allow for interaction between prover and verifier, as well as a tiny but nonzero probability that an invalid proof passes verification. Arguments(But not IPs) even permit there to be "proofs" of false statements, so long as those "proofs" require exorbitant computational power to find.
 
 **IP = PSPACE**
 
