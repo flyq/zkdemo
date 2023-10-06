@@ -17,8 +17,9 @@ members = [
     "src/halo2/simple",
     "src/halo2/simple1",
     "src/halo2/structs",
-    "src/nova/sign",
     "src/nova/minroot",
+    "src/nova/sign",
+    "src/nova/circuit",
     "src/pazk/p3_1",
     "src/sindri/forge-sample",
     "src/supernova/example",
@@ -35,7 +36,7 @@ ark-relations = { version = "0.4" }
 ark-r1cs-std = { version = "0.4" }
 ark-serialize = { version = "0.4", features = ["derive"] }
 ark-std = { version = "0.4" }
-bellperson = { version = "0.25", default-features = false, features = [
+bellperson = { version = "0.26", default-features = false, features = [
     "groth16",
 ] }
 bincode = { version = "1.2" }
@@ -48,6 +49,7 @@ halo2_proofs = { git = "https://github.com/zcash/halo2", package = "halo2_proofs
     "dev-graph",
 ] }
 nova-snark = { git = "https://github.com/microsoft/Nova", rev = "dd3b1a217d49f662571e124f6a07fc6441aa0264" }
+nova-analysis = { git = "https://github.com/zkp-learning/Nova-Analysis", package = 'nova-snark' }
 num-bigint = { version = "0.4.3", features = ["serde", "rand"] }
 pairing = { version = "0.23" }
 pasta_curves = { version = "0.5", features = ["repr-c", "serde"] }
