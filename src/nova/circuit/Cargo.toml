@@ -8,3 +8,5 @@ edition = "2021"
 [dependencies]
 nova-analysis = { workspace = true }
 pasta_curves = { workspace = true }
+bellpepper-core = { workspace = true }
+ff = { workspace = true }
