@@ -1,7 +1,8 @@
 use core::ops::{AddAssign, MulAssign};
 
-use bellperson::gadgets::{boolean::AllocatedBit, test::TestConstraintSystem};
-use bellperson::{ConstraintSystem, SynthesisError};
+use bellpepper_core::{
+    boolean::AllocatedBit, test_cs::TestConstraintSystem, ConstraintSystem, SynthesisError,
+};
 use ff::derive::byteorder::{ByteOrder, LittleEndian};
 use ff::{Field, PrimeField, PrimeFieldBits};
 use nova_snark::{gadgets::ecc::AllocatedPoint, traits::Group as NovaGroup};

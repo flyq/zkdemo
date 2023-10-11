@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 nova-snark = { workspace = true }
-bellperson = { workspace = true }
+bellpepper-core = { workspace = true }
 bincode = { workspace = true }
 ff = { workspace = true }
 num-bigint = { workspace = true }
