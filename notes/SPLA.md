@@ -1,0 +1,2 @@
+# homework
+give $f(x) = Ax$, and $A \in \mathbb{F}^{m\times n}$, $h(y) = By$, and $B \in \mathbb{F}^{k \times m}$, $w(x) = Dx$, and $D \in \mathbb{F}^{k \times n}$, and $w(x) = h(f(x))$, what does the matrix $D$ correspond to  in terms of $A, \ B$, or their coreesponding columns?
