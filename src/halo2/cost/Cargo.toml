@@ -9,4 +9,5 @@ edition = "2021"
 group = { workspace = true }
 gumdrop = { workspace = true }
 halo2_proofs = { workspace = true }
+halo2curves = { workspace = true }
 rand_core = { workspace = true }

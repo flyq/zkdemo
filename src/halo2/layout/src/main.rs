@@ -2,11 +2,11 @@ use std::marker::PhantomData;
 
 use halo2_proofs::arithmetic::Field;
 use halo2_proofs::circuit::{Cell, Layouter, Region, SimpleFloorPlanner, Value};
-use halo2_proofs::pasta::Fp;
 use halo2_proofs::plonk::{
     Advice, Assigned, Circuit, Column, ConstraintSystem, Error, Fixed, TableColumn,
 };
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 use plotters::prelude::*;
 use rand_core::OsRng;
 

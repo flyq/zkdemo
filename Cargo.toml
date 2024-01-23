@@ -2,9 +2,10 @@
 members = [
     "src/arkworks/ec",
     "src/arkworks/ff",
+    "src/arkworks/merkletree",
     "src/arkworks/ser",
-    "src/bellperson/hash",
     "src/bellpepper/linear_combination",
+    "src/bellperson/hash",
     "src/halo2/chips",
     "src/halo2/cost",
     "src/halo2/fib1",
@@ -18,9 +19,9 @@ members = [
     "src/halo2/simple",
     "src/halo2/simple1",
     "src/halo2/structs",
+    "src/nova/circuit",
     "src/nova/minroot",
     "src/nova/sign",
-    "src/nova/circuit",
     "src/pazk/p3_1",
     "src/sindri/forge-sample",
     "src/supernova/example",
@@ -30,8 +31,13 @@ resolver = "2"
 
 [workspace.dependencies]
 ark-bls12-381 = { version = "0.4" }
-ark-crypto-primitives = { version = "0.4" }
+ark-crypto-primitives = { version = "0.4", features = [
+    "crh",
+    "r1cs",
+    "merkle_tree",
+] }
 ark-ec = { version = "0.4" }
+ark-ed-on-bls12-381 = { version = "0.4", features = ["r1cs"] }
 ark-ff = { version = "0.4", default-features = false }
 ark-relations = { version = "0.4" }
 ark-r1cs-std = { version = "0.4" }
@@ -48,9 +54,10 @@ ff = { version = "0.13", default-features = false, features = ["derive"] }
 flate2 = { version = "1.0" }
 group = { version = "0.13" }
 gumdrop = { version = "0.8" }
-halo2_proofs = { git = "https://github.com/zcash/halo2", package = "halo2_proofs", features = [
+halo2curves = { git = "https://github.com/privacy-scaling-explorations/halo2curves" }
+halo2_proofs = { git = "https://github.com/privacy-scaling-explorations/halo2", package = "halo2_proofs", features = [
     "dev-graph",
-] }
+], tag = "v0.3.0" }
 nova-snark = { git = "https://github.com/microsoft/Nova", rev = "9165211" }
 nova-analysis = { git = "https://github.com/zkp-learning/Nova-Analysis", package = 'nova-snark' }
 num-bigint = { version = "0.4.3", features = ["serde", "rand"] }
@@ -65,6 +72,11 @@ sha2 = { version = "0.10" }
 sha3 = { version = "0.10" }
 supernova = { git = "https://github.com/jules/supernova", rev = "a707ad58347bc86d2ad4edac6494d580c3a08cdd" }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tracing = { version = "0.1", default-features = false, features = [
+    "attributes",
+] }
+tracing-subscriber = { version = "0.2" }
+
 
 [profile.release]
 opt-level = "z"

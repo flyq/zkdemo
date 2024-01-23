@@ -6,7 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ff = { workspace = true }
 halo2_proofs = { workspace = true }
+halo2curves = { workspace = true }
+plotters = { workspace = true }
 rand_core = { workspace = true }
-ff = "0.13"
-plotters = "0.3"

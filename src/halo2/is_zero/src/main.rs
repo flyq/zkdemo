@@ -1,9 +1,9 @@
 use halo2_proofs::arithmetic::Field;
 use halo2_proofs::circuit::{AssignedCell, Layouter, SimpleFloorPlanner, Value};
 use halo2_proofs::dev::MockProver;
-use halo2_proofs::pasta::Fp;
 use halo2_proofs::plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Expression, Selector};
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 
 mod is_zero_config;
 

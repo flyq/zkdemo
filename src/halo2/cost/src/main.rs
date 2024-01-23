@@ -6,7 +6,7 @@ use std::{cmp, fmt, iter};
 use group::{ff::Field, Curve, Group};
 use gumdrop::Options;
 use halo2_proofs::arithmetic::best_multiexp;
-use halo2_proofs::pasta::pallas;
+use halo2curves::pasta::pallas;
 
 struct Estimator {
     /// Scalars for estimating multiexp performance.

@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 halo2_proofs = { workspace = true }
+halo2curves = { workspace = true }

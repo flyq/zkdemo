@@ -3,9 +3,9 @@ use std::marker::PhantomData;
 use halo2_proofs::arithmetic::Field;
 use halo2_proofs::circuit::{AssignedCell, Layouter, SimpleFloorPlanner, Value};
 use halo2_proofs::dev::MockProver;
-use halo2_proofs::pasta::Fp;
 use halo2_proofs::plonk::{Advice, Circuit, Column, ConstraintSystem, Error, Selector};
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 
 #[derive(Debug, Clone)]
 struct Number<F: Field>(AssignedCell<F, F>);

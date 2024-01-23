@@ -3,9 +3,9 @@ use std::marker::PhantomData;
 use halo2_proofs::arithmetic::Field;
 use halo2_proofs::circuit::*;
 use halo2_proofs::dev::MockProver;
-use halo2_proofs::pasta::Fp;
 use halo2_proofs::plonk::*;
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 
 // #[derive(Debug, Clone)] is a Rust attribute used to automatically generate implementations of the Debug and Clone traits for a struct
 #[derive(Debug, Clone)]

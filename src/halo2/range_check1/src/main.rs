@@ -8,9 +8,9 @@ use ff::PrimeField;
 use halo2_proofs::circuit::floor_planner::V1;
 use halo2_proofs::circuit::*;
 use halo2_proofs::dev::{FailureLocation, MockProver, VerifyFailure};
-use halo2_proofs::pasta::Fp;
 use halo2_proofs::plonk::*;
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 
 #[derive(Debug, Clone)]
 /// A range-constrained value in the circuit produced by the RangeCheckConfig.
@@ -149,7 +149,7 @@ fn main() {
                     region: (0, "Assign value").into(),
                     offset: 0
                 },
-                cell_values: vec![(((Any::Advice, 0).into(), 0).into(), "0x8".to_string())]
+                cell_values: vec![(((Any::Advice, 0), 0), "0x8".to_string())]
             }])
         );
     }
