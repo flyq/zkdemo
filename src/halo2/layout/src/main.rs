@@ -205,7 +205,7 @@ impl<F: Field> Circuit<F> for MyCircuit<F> {
          *   ...       ...    ...  0
          * ]
          */
-        meta.lookup(|meta| {
+        meta.lookup("lookup", |meta| {
             let a_ = meta.query_any(a, Rotation::cur());
             vec![(a_, sl)]
         });
@@ -213,15 +213,15 @@ impl<F: Field> Circuit<F> for MyCircuit<F> {
         meta.create_gate("Combined add-mult", |meta| {
             let d = meta.query_advice(d, Rotation::next());
             let a = meta.query_advice(a, Rotation::cur());
-            let sf = meta.query_fixed(sf);
+            let sf = meta.query_fixed(sf, Rotation::cur());
             let e = meta.query_advice(e, Rotation::prev());
             let b = meta.query_advice(b, Rotation::cur());
             let c = meta.query_advice(c, Rotation::cur());
 
-            let sa = meta.query_fixed(sa);
-            let sb = meta.query_fixed(sb);
-            let sc = meta.query_fixed(sc);
-            let sm = meta.query_fixed(sm);
+            let sa = meta.query_fixed(sa, Rotation::cur());
+            let sb = meta.query_fixed(sb, Rotation::cur());
+            let sc = meta.query_fixed(sc, Rotation::cur());
+            let sm = meta.query_fixed(sm, Rotation::cur());
 
             vec![a.clone() * sa + b.clone() * sb + a * b * sm - (c * sc) + sf * (d * e)]
         });

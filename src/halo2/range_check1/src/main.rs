@@ -149,7 +149,10 @@ fn main() {
                     region: (0, "Assign value").into(),
                     offset: 0
                 },
-                cell_values: vec![(((Any::Advice, 0), 0), "0x8".to_string())]
+                cell_values: vec![(
+                    ((Any::Advice(Advice::default()), 0).into(), 0).into(),
+                    "0x8".to_string()
+                )]
             }])
         );
     }

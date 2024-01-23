@@ -2270,6 +2270,7 @@ version = "0.1.0"
 dependencies = [
  "ff 0.13.0",
  "halo2_proofs",
+ "halo2curves 0.6.0 (git+https://github.com/privacy-scaling-explorations/halo2curves)",
  "plotters",
 ]
 
@@ -2279,6 +2280,7 @@ version = "0.1.0"
 dependencies = [
  "ff 0.13.0",
  "halo2_proofs",
+ "halo2curves 0.6.0 (git+https://github.com/privacy-scaling-explorations/halo2curves)",
  "plotters",
 ]
 

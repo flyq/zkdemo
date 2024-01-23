@@ -14,9 +14,9 @@ use halo2_proofs::circuit::floor_planner::V1;
 use halo2_proofs::circuit::*;
 #[allow(unused_imports)]
 use halo2_proofs::dev::{FailureLocation, MockProver, VerifyFailure};
-use halo2_proofs::pasta::Fp;
 use halo2_proofs::plonk::*;
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 use plotters::prelude::*;
 
 // create a submodule which is my table and use that
@@ -89,7 +89,7 @@ impl<F: PrimeField, const RANGE: usize, const LOOKUP_RANGE: usize>
         // Check that a value is contained within a lookup table of values 0..RANGE (exclusive)
         // api to instantiate a lookup argument
         // Similar to create gate as an api so we need to query the selector and our value
-        meta.lookup(|meta| {
+        meta.lookup("lookup", |meta| {
             let q_lookup = meta.query_selector(q_lookup);
             let value = meta.query_advice(value, Rotation::cur());
 
@@ -216,18 +216,7 @@ fn main() {
     #[allow(unused_variables)]
     let prover = MockProver::run(k, &circuit, vec![]).unwrap();
 
-    // prover.assert_satisfied(); // this should fail!
-    // assert_eq!(
-    //     prover.verify(),
-    //     Err(vec![VerifyFailure::ConstraintNotSatisfied {
-    //         constraint: ((0, "range check").into(), 0, "range check").into(),
-    //         location: FailureLocation::InRegion {
-    //             region: (0, "Assign value").into(),
-    //             offset: 0
-    //         },
-    //         cell_values: vec![(((Any::Advice, 0).into(), 0).into(), "0x8".to_string())]
-    //     }])
-    // );
+    assert_eq!(prover.verify(), Ok(()));
 
     // ---------------- other check ----------------
     let root = BitMapBackend::new("range-check-2-layout.png", (1024, 3096)).into_drawing_area();

@@ -6,10 +6,11 @@
 use ff::PrimeField;
 use halo2_proofs::circuit::floor_planner::V1;
 use halo2_proofs::circuit::*;
-use halo2_proofs::dev::{FailureLocation, MockProver, VerifyFailure};
-use halo2_proofs::pasta::Fp;
+use halo2_proofs::dev::MockProver;
+//  use halo2_proofs::dev::{FailureLocation,  VerifyFailure};
 use halo2_proofs::plonk::*;
 use halo2_proofs::poly::Rotation;
+use halo2curves::pasta::Fp;
 use plotters::prelude::*;
 
 // create a submodule which is my table and use that
@@ -94,7 +95,7 @@ impl<F: PrimeField, const RANGE: usize, const LOOKUP_NUMBITS: usize, const LOOKU
         // IN THIS EXAMPLE we also want to lookup into the num_bits table
         // api to instantiate a lookup argument
         // Similar to create gate as an api so we need to query the selector and our value
-        meta.lookup(|meta| {
+        meta.lookup("lookup", |meta| {
             let q_lookup = meta.query_selector(q_lookup);
             // we add another advise column from the previous example
             let num_bits = meta.query_advice(num_bits, Rotation::cur());
@@ -224,12 +225,6 @@ fn main() {
     const LOOKUP_NUMBITS: usize = 8; // 8-bit value table
     const LOOKUP_RANGE: usize = 256; // 8-bit value table
 
-    let circuit = MyCircuit::<Fp, RANGE, LOOKUP_NUMBITS, LOOKUP_RANGE> {
-        value: Value::known(Fp::one().into()),
-        large_value_num_bits: Some(4), // 8 which is 4 bits
-        large_value: Value::known(Fp::from(8 as u64).into()),
-    };
-
     // Successful cases large_value=0,1,2,3,4,5,6,7 (these should also pass the lookup range check)
     for i in 0..RANGE {
         let circuit = MyCircuit::<Fp, RANGE, LOOKUP_NUMBITS, LOOKUP_RANGE> {
@@ -242,37 +237,42 @@ fn main() {
         prover.verify().unwrap_err();
     }
 
-    //     // Out-of-range `value = 8`
-    //     {
-    //         let circuit = MyCircuit::<Fp, RANGE> {
-    //             value: Value::known(Fp::from(RANGE as u64).into()),
-    //         };
-    //         let prover = MockProver::run(k, &circuit, vec![]).unwrap();
-    //         // prover.assert_satisfied(); // this should fail!
-    //         assert_eq!(
-    //             prover.verify(),
-    //             Err(vec![VerifyFailure::ConstraintNotSatisfied {
-    //                 constraint: ((0, "range check").into(), 0, "range check").into(),
-    //                 location: FailureLocation::InRegion {
-    //                     region: (0, "Assign value").into(),
-    //                     offset: 0
-    //                 },
-    //                 cell_values: vec![(((Any::Advice, 0).into(), 0).into(), "0x8".to_string())]
-    //             }])
-    //         );
-    //     }
+    // Out-of-range `value = 8`
+    {
+        let circuit = MyCircuit::<Fp, RANGE, LOOKUP_NUMBITS, LOOKUP_RANGE> {
+            value: Value::known(Fp::from(RANGE as u64).into()),
+            large_value_num_bits: Some(4),
+            large_value: Value::known(Fp::from(8 as u64).into()),
+        };
+        let prover = MockProver::run(k, &circuit, vec![]).unwrap();
+        // prover.assert_satisfied(); // this should fail!
+        let error = prover.verify().unwrap_err();
+        println!("{}", error.len());
+        // assert_eq!(
+        //     prover.verify(),
+        //     Err(vec![VerifyFailure::Lookup {
+        //         name: "lookup".to_string(),
+        //         lookup_index: 0,
+        //         location: FailureLocation::InRegion {
+        //             region: (1, "Assign value for lookup range check").into(),
+        //             offset: 0
+        //         }
+        //     }])
+        // );
+    }
 
-    //     let root = BitMapBackend::new("range-check-2-layout.png", (1024, 3096)).into_drawing_area();
-    //     root.fill(&WHITE).unwrap();
-    //     let root = root
-    //         .titled("Range Check 2 Layout", ("sans-serif", 60))
-    //         .unwrap();
+    let root = BitMapBackend::new("range-check-2-layout.png", (1024, 3096)).into_drawing_area();
+    root.fill(&WHITE).unwrap();
+    let root = root
+        .titled("Range Check 2 Layout", ("sans-serif", 60))
+        .unwrap();
 
-    //     let circuit = MyCircuit::<Fp, 8, 256> {
-    //         value: Value::unknown(),
-    //         large_value: Value::unknown(),
-    //     };
-    //     halo2_proofs::dev::CircuitLayout::default()
-    //         .render(3, &circuit, &root)
-    //         .unwrap();
+    let circuit = MyCircuit::<Fp, 8, 8, 256> {
+        value: Value::unknown(),
+        large_value_num_bits: None,
+        large_value: Value::unknown(),
+    };
+    halo2_proofs::dev::CircuitLayout::default()
+        .render(3, &circuit, &root)
+        .unwrap();
 }
